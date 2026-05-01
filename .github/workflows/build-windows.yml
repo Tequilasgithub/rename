@@ -1,0 +1,29 @@
+name: Build Windows .exe
+
+on:
+  workflow_dispatch:
+    inputs:
+      entry_script:
+        description: "入口脚本路径（相对于仓库根目录）"
+        required: true
+        type: string
+      app_name:
+        description: "应用名称"
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyinstaller
+      - run: |
+          pyinstaller --onefile --windowed --name "${{{{ inputs.app_name }}}}" "${{{{ inputs.entry_script }}}}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{{{ inputs.app_name }}}}-Windows
+          path: dist/${{{{ inputs.app_name }}}}.exe
