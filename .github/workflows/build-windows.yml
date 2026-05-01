@@ -22,8 +22,8 @@ jobs:
           python-version: "3.12"
       - run: pip install pyinstaller
       - run: |
-          pyinstaller --onefile --windowed --name "${{{{ inputs.app_name }}}}" "${{{{ inputs.entry_script }}}}"
+          pyinstaller --onefile --windowed --name "${{ inputs.app_name }}" "${{ inputs.entry_script }}"
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{{{ inputs.app_name }}}}-Windows
-          path: dist/${{{{ inputs.app_name }}}}.exe
+          name: ${{ inputs.app_name }}-Windows
+          path: dist/${{ inputs.app_name }}.exe
